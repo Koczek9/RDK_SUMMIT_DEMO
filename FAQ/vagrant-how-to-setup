@@ -1,0 +1,7 @@
+Vagrant is virtualbox VM. It can be found here https://www.vagrantup.com/downloads. After installing it inside your system you can enter virtual machine in just couple of steps:
+
+1. Go to directory where "Vagrantfile" is stored, and open terminal in this directory.
+2. Run "vagrant up" command this will download and run all dependencies. It will take like 20 minutes in first run so be patient. After first run it will take about 30 seconds to run.
+3. After previous command is done run "vagrant ssh" (also from console located where "Vagrantfile" is located in) it will log in into VM.
+
+When VM is running (after "vagrant up") you can use more than one active session of "vagrant ssh" if needed. 

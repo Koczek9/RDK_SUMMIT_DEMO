@@ -1,0 +1,15 @@
+Bundle Generator is a tool which generates extended OCI bundles from OCI Images.
+
+To Bundle Generator buildah just open Fedora VM provided in this package (Vagrantfile). If you are not sure how to work with Vagrant check "vagrant-how-to-setup" file.
+
+1. Clone bundle generator repository: git clone https://github.com/rdkcentral/BundleGen.git
+2. Go to bundlegen directory: cd bundlegen
+3. (Optional) Create virtual environment: python3 -m venv .venv
+4. (Optional) Enter virtual environment: source .venv/bin/activate
+5. Install bundlegen requirements: pip install -r requirements.txt
+6. Install bundlegen: pip install --editable .
+
+That is it. Now you can create bundle from images by doing: bundlegen generate --platform <platform-name> --appmetadata <path-to-app-metadata> <img-url> <output-dir>
+
+Note the image URL should be in the form `docker://image-url`. If the image is on the Docker Hub, the full URL can be ommited - e.g `docker://hello-world`.
+

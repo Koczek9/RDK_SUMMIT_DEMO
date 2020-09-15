@@ -1,0 +1,12 @@
+Docker hub is a platform which helps you to manage containers. We are using it to pass OCI images into bundle generator.
+
+1. Go to "https://hub.docker.com/"
+2. Click "sign in"
+3. Select username + password
+4. On email address provided there should be link to verify account
+5. After account is verified go to "https://hub.docker.com/" again and press "Create Repository"
+6. Choose name of repository (it can be private for purpose of the test) and click Create
+
+When using docker hub as a way to transfer images they will have format as: "YourUserName/RepositoryName:TagName"
+
+

@@ -1,0 +1,9 @@
+Buildah is a tool that can be used to create OCI images.
+
+To install buildah just open Fedora VM provided in this package (Vagrantfile). If you are not sure how to work with Vagrant check "vagrant-how-to-setup" file.
+
+1. dnf -y install buildah
+
+Yes, this is everything you need to do for setup buildah.
+
+If you would like to know more about buildah I recommend going through tutorial found here https://github.com/containers/buildah/blob/master/docs/tutorials/01-intro.md
