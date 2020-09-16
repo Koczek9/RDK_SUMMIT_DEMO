@@ -20,3 +20,7 @@ You will also need a Docker Hub account (see `FAQ/docker-hub-how-to-setup` for i
 Once you have these set up, you're ready to create a DAC app using the instructions in `wayland_demo_instructions` or `qt_app_instructions`.
 
 TODO: check instructions for Windows machines
+
+## Hardware requirements
+
+TODO - Raspberry Pi 3B, but which image?
