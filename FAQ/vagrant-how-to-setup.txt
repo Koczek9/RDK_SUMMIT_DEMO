@@ -1,0 +1,11 @@
+Start by installing Vagrant on your host machine by downloading the relevant version for your OS here: https://www.vagrantup.com/downloads.
+
+You must also have VirtualBox installed on your system. Vagrant works with all versions of VirtualBox > 4.0. Download and install the relevant VirtualBox binary from here: https://www.virtualbox.org/wiki/Downloads.
+
+To get the virtual machine ready for use, run the following:
+
+1. Enter the repository directory where Vagrantfile is stored.
+2. Run "vagrant up" command. This will download and run all dependencies. It will take like 20 minutes in first run so be patient. After first run it will take about 30 seconds to run.
+3. After previous command is done run "vagrant ssh" (also from console located where "Vagrantfile" is located in) it will log in into VM.
+
+When VM is running (after "vagrant up") you can use more than one active session of "vagrant ssh" if needed.
