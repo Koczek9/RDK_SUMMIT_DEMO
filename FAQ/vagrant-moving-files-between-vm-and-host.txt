@@ -1,4 +1,6 @@
 In Vagrant there is default mount directory: hosts directory where "Vagrantfile" is stored will be bind-mounted into "/vagrant" inside VM.
-This can be used to moving files in/out of the VM. So any new file created/moved to Vagrantfile direcotry should be visible in "/vagrant" and other way around.
+This can be used to moving files in/out of the VM. So any new file created/moved to Vagrantfile directory should be visible in "/vagrant" and other way around.
+
+The files don't always show up instantly. You may need to use "vagrant halt" and "vagrant up" to restart the VM. The files should then be visible in "/vagrant".
 
 Known bug: For some reason sometimes in Fedora VM this default bind-mount doesn't work as it should. If that happens and you cannot move files in/out of VM you can use vagrant scp (https://github.com/invernizzi/vagrant-scp) instead.
