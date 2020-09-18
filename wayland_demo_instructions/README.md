@@ -26,7 +26,7 @@ This file will help you to create wayland demo inside container using buildah. F
 1. Copy package file "wayland-egl-test" to box.
 2. Run ldd against package "ldd --list ./wayland-egl-test"
 3. Copy all packages dependencies names
-4. In bitbake directory of your build run "find -name LIBRARY_NAME" and copy it to known location
+4. In bitbake directory of your build run "find -name LIBRARY_NAME" and copy it to known location (most of them should be in "./rdk-workspace/build-raspberrypi-cpc-mc/tmp/work/raspberrypi_cpc_mc-rdk-linux-gnueabi/rdk-firebolt-mediaclient-image/1.0-r0/rootfs/usr/lib")
 5. Repeat step 4 for all dependencies libraries
 
 Warning you cannot just run "ldd" on your machine beacuse you will probably have different architecture of ldd. Also running "objdump ./wayland-egl-test" would be insufficient as it would just get dependencies of packet itself, without dependencies of its dependencies (https://stackoverflow.com/questions/11524820/what-is-the-difference-between-ldd-and-objdump).
