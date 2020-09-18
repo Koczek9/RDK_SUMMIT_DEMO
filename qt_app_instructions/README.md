@@ -10,6 +10,8 @@ It is assumed that you have set up a Vagrant VM based on the instructions in thi
 
 All of the following will be run on the VM. Run `vagrant ssh` in the repository's root directory if you're not already ssh'd in.
 
+**OPTIONAL** - If you want to go through the pain of creating your own package from scratch, refer to `./package-creation-instructions.md`.
+
 ## Setup
 
 ### Switch to root
@@ -24,10 +26,11 @@ sudo -s
 
 Run the image creation script:
 ```
-/vagrant/qt_app_instructions/create-image.sh
+cd /vagrant/qt_app_instructions/
+./create-image.sh
 ```
 
-Push the image to your Docker Hub repository
+Push the image to your Docker Hub repository:
 ```
 buildah push --creds [username]:[password] qt-demo-app-image [username]/[repository]:qt-demo-app
 ```
@@ -36,14 +39,19 @@ buildah push --creds [username]:[password] qt-demo-app-image [username]/[reposit
 
 To launch our application in a container with Dobby, the application needs to be available as an OCI bundle.
 
-
 Let's generate an OCI bundle using the image we've just created and uploaded to Docker Hub using `BundleGen`
 ```
 cd /home/vagrant/bundlegen/
-bundlegen generate --creds [username]:[password] --platform rpi3 --appmetadata /home/vagrant/RDK_SUMMIT_DEMO/qt-demo-app.json docker://[username]/[repository]:qt-demo-app /vagrant/qt-app-bundle
+bundlegen generate --creds [username]:[password] --platform rpi3 --searchpath /vagrant/bundlegen_templates --appmetadata /vagrant/qt_app_instructions/qt-test-app.json docker://[username]/[repository]:qt-demo-app /vagrant/bundles/qt-demo-app
 ```
 
-NB: This generates the bundle in `/vagrant`. That way, the bundle is accessible on your host machine.
+NB: This generates the bundle in `/vagrant/bundles`. That way, the bundle should be accessible on your host machine.
+
+If for some reason the bundle does not show up on your host machine, use the `vagrant-scp` plugin on the host:
+```
+vagrant plugin install vagrant-scp
+vagrant scp dobby-fedora:/vagrant/bundles/qt-demo-app.tar.gz .
+```
 
 ### Launch the container on your Raspberry Pi
 
@@ -52,33 +60,39 @@ Return to your host machine.
 Copy the newly generated tarball containing the OCI bundle to your Raspberry Pi, for example with scp:
 ```
 cd [path-to-this-repo]
-scp -P 10022 ./qt-app-bundle.tar.gz root@[rpi-ip-address]:/tmp/data/bundles/
+ssh root@[rpi-ip-address] "mkdir -p /tmp/data/bundles"
+scp ./qt-demo-app.tar.gz root@[rpi-ip-address]:/tmp/data/bundles/
 ```
 
 ssh into the Raspberry Pi:
 ```
-ssh -P 10022 root@[rpi-ip-address]
+ssh root@[rpi-ip-address]
 ```
 
 Unpack the tarball:
 ```
 cd /tmp/data/bundles/
-tar -xzvf qt-app-bundle.tar.gz
+tar -xzvf qt-demo-app.tar.gz
 ```
 
 Change permission on the container rootfs:
 ```
-chown -R non-root:non-root qt-app-bundle
+chown -R non-root:non-root qt-demo-app
 ```
 
-Launch wayland sink (and set permissions for the socket):
+The `rpi3.json` platform template adds the `/tmp/westeros-dac` mount to add a Westeros socket to the container, but we don't need it, so let's just create a dummy file to mount:
 ```
-export XDG_RUNTIME_DIR=/tmp
-westeros --renderer /usr/lib/libwesteros_render_gl.so.0.0.0 --display westeros-dac
-chmod 777 /tmp/westeros-dac
+touch /tmp/westeros-dac
+```
+
+
+Kill any open GUI apps being drawn on the screen. For example to kill plui:
+```
+curl -X POST -H "Content-Type: application/json" 'http://127.0.0.1:9998/jsonrpc' -d '{"jsonrpc": "2.0","id": 4,"method": "Controller.1.deactivate", "params": { "callsign": "ResidentApp" }}' ; echo
+curl -X POST -H "Content-Type: application/json" 'http://127.0.0.1:9998/jsonrpc' -d '{"jsonrpc": "2.0","id": 4,"method": "Controller.1.deactivate", "params": { "callsign": "SearchAndDiscoveryApp" }}' ; echo
 ```
 
 And finally, launch your container:
 ```
-DobbyTool start qt-demo ./qt-app-bundle
+DobbyTool start qt-demo ./qt-demo-app
 ```
