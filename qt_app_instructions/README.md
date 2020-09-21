@@ -16,8 +16,7 @@ All of the following will be run on the VM. Run `vagrant ssh` in the repository'
 
 ### Switch to root
 
-buildah requires root access so we want to enable it
-
+buildah requires root access so we want to enable it:
 ```
 sudo -s
 ```
@@ -39,7 +38,7 @@ buildah push --creds [username]:[password] qt-demo-app-image [username]/[reposit
 
 To launch our application in a container with Dobby, the application needs to be available as an OCI bundle.
 
-Let's generate an OCI bundle using the image we've just created and uploaded to Docker Hub using `BundleGen`
+Let's generate an OCI bundle using the image we've just created and uploaded to Docker Hub using `BundleGen`:
 ```
 cd /home/vagrant/bundlegen/
 bundlegen generate --creds [username]:[password] --platform rpi3 --searchpath /vagrant/bundlegen_templates --appmetadata /vagrant/qt_app_instructions/qt-test-app.json docker://[username]/[repository]:qt-demo-app /vagrant/bundles/qt-demo-app
@@ -86,7 +85,7 @@ touch /tmp/westeros-dac
 ```
 
 
-Kill any open GUI apps being drawn on the screen. For example to kill plui:
+Kill any open GUI apps being drawn on the screen. For example to kill plui on the Raspberry Pi 3 build:
 ```
 curl -X POST -H "Content-Type: application/json" 'http://127.0.0.1:9998/jsonrpc' -d '{"jsonrpc": "2.0","id": 4,"method": "Controller.1.deactivate", "params": { "callsign": "ResidentApp" }}' ; echo
 curl -X POST -H "Content-Type: application/json" 'http://127.0.0.1:9998/jsonrpc' -d '{"jsonrpc": "2.0","id": 4,"method": "Controller.1.deactivate", "params": { "callsign": "SearchAndDiscoveryApp" }}' ; echo
