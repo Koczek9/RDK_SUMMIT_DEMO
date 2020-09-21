@@ -23,6 +23,8 @@ sudo -s
 
 ### Create image and push it to your docker repository
 
+To create an image, we use buildah to first create an image from scratch, to which we add a package containing the `openglwindow` Qt example binary, as well as the dependencies it has. We do this using the `create-image.sh` script.
+
 Run the image creation script:
 ```
 cd /vagrant/qt_app_instructions/
@@ -41,27 +43,20 @@ To launch our application in a container with Dobby, the application needs to be
 Let's generate an OCI bundle using the image we've just created and uploaded to Docker Hub using `BundleGen`:
 ```
 cd /home/vagrant/bundlegen/
-bundlegen generate --creds [username]:[password] --platform rpi3 --searchpath /vagrant/bundlegen_templates --appmetadata /vagrant/qt_app_instructions/qt-test-app.json docker://[username]/[repository]:qt-demo-app /vagrant/bundles/qt-demo-app
-```
-
-NB: This generates the bundle in `/vagrant/bundles`. That way, the bundle should be accessible on your host machine.
-
-If for some reason the bundle does not show up on your host machine, use the `vagrant-scp` plugin on the host:
-```
-vagrant plugin install vagrant-scp
-vagrant scp dobby-fedora:/vagrant/bundles/qt-demo-app.tar.gz .
+bundlegen generate --creds [username]:[password] --platform rpi3 --searchpath /vagrant/bundlegen_templates --appmetadata /vagrant/qt_app_instructions/qt-test-app.json docker://[username]/[repository]:qt-demo-app ./qt-demo-app
 ```
 
 ### Launch the container on your Raspberry Pi
 
-Return to your host machine.
+## Get the bundle to the Raspberry Pi device
 
 Copy the newly generated tarball containing the OCI bundle to your Raspberry Pi, for example with scp:
 ```
-cd [path-to-this-repo]
-ssh root@[rpi-ip-address] "mkdir -p /tmp/data/bundles"
-scp ./qt-demo-app.tar.gz root@[rpi-ip-address]:/tmp/data/bundles/
+ssh root@[rpi-ip-address] "mkdir -p /opt/persistent/bundles"
+scp ./qt-demo-app.tar.gz root@[rpi-ip-address]:/opt/persistent/bundles/
 ```
+
+Return to your host machine.
 
 ssh into the Raspberry Pi:
 ```
@@ -70,9 +65,11 @@ ssh root@[rpi-ip-address]
 
 Unpack the tarball:
 ```
-cd /tmp/data/bundles/
+cd /opt/persistent/bundles/
 tar -xzvf qt-demo-app.tar.gz
 ```
+
+## Prepare the app to be launched from the bundle
 
 Change permission on the container rootfs:
 ```
@@ -84,14 +81,15 @@ The `rpi3.json` platform template adds the `/tmp/westeros-dac` mount to add a We
 touch /tmp/westeros-dac
 ```
 
-
 Kill any open GUI apps being drawn on the screen. For example to kill plui on the Raspberry Pi 3 build:
 ```
 curl -X POST -H "Content-Type: application/json" 'http://127.0.0.1:9998/jsonrpc' -d '{"jsonrpc": "2.0","id": 4,"method": "Controller.1.deactivate", "params": { "callsign": "ResidentApp" }}' ; echo
 curl -X POST -H "Content-Type: application/json" 'http://127.0.0.1:9998/jsonrpc' -d '{"jsonrpc": "2.0","id": 4,"method": "Controller.1.deactivate", "params": { "callsign": "SearchAndDiscoveryApp" }}' ; echo
 ```
 
-And finally, launch your container:
+## Launch the app in a container
+
+And finally, to launch your container:
 ```
 DobbyTool start qt-demo ./qt-demo-app
 ```
