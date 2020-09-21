@@ -83,7 +83,7 @@ source .venv/bin/activate
 ```
 7. Create bundle:
 ```
-bundlegen generate --creds [username]:[password] --searchpath /vagrant/bundlegen_templates --platform rpi3 --appmetadata sample_app_metadata/wayland-egl-test.json docker://[username]/[repository]:wayland_demo ./wayland_bundle
+bundlegen generate --creds [username]:[password] --searchpath /vagrant/bundlegen_templates --platform rpi3 --appmetadata /vagrant/wayland_demo_instruction/wayland-egl-test.json docker://[username]/[repository]:wayland_demo ./wayland_bundle
 ```
 8. On your box create directory for test:
 ```
