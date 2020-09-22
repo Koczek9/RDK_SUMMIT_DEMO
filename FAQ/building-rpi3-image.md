@@ -1,7 +1,9 @@
 # To build the Raspberry Pi 3 Platco build used for these demos, follow these steps:
 
+
 1. Initialise the repo and get bitbake layers:
 ```
+cd [workspace dir]
 export JOB_NAME=RPI_BUILD
 repo init -u ssh://gerrit.teamccp.com:29418/rdk/yocto_oe/manifests/raspberrypi-manifest -m raspberrypi-cpc-mc.xml -b 2006_sprint  -g all --no-repo-verify --repo-url=ssh://gerrit.teamccp.com:29418/rdk/tools/git-repo
 repo sync -j$(nproc) --no-clone-bundle --no-tags

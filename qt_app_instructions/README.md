@@ -46,7 +46,7 @@ cd /home/vagrant/bundlegen/
 bundlegen generate --creds [username]:[password] --platform rpi3 --searchpath /vagrant/bundlegen_templates --appmetadata /vagrant/qt_app_instructions/qt-test-app.json docker://[username]/[repository]:qt-demo-app ./qt-demo-app
 ```
 
-### Launch the container on your Raspberry Pi
+# Launch the container on your Raspberry Pi
 
 ## Get the bundle to the Raspberry Pi device
 
@@ -56,9 +56,7 @@ ssh root@[rpi-ip-address] "mkdir -p /opt/persistent/bundles"
 scp ./qt-demo-app.tar.gz root@[rpi-ip-address]:/opt/persistent/bundles/
 ```
 
-Return to your host machine.
-
-ssh into the Raspberry Pi:
+Return to your host machine and ssh into the Raspberry Pi:
 ```
 ssh root@[rpi-ip-address]
 ```
