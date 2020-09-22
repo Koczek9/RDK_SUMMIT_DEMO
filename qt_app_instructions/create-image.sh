@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
-# delete container if it already exists
 containername=qt-demo-app
-buildah rm $containername
+
+# delete container if it already exists
+containerstatus=$(buildah inspect $containername 2>&1)
+if [[ ! $containerstatus =~ "error locating image" ]]; then
+        echo "Removing old container $containername..."
+        buildah rm $containername
+fi
 
 # create new image from scratch
 newcontainer=$(buildah from scratch)
@@ -23,3 +28,4 @@ buildah config --cmd "/openglwindow -platform eglfs" $containername
 
 # create image
 buildah commit $containername qt-demo-app-image
+
