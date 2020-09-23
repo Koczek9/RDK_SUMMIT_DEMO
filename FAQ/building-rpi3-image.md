@@ -22,7 +22,7 @@ source meta-rdk/setup-environment # Choose 11 - raspberrypi-cpc-mc
 
 4. Add DOBBY_CONTAINERS distro feature:
 ```
-echo "DISTRO_FEATURES += \"DOBBY_CONTAINERS\"" >> conf/local.conf
+echo "DISTRO_FEATURES += \"DOBBY_CONTAINERS\"" >> ../meta-raspberrypi/conf/machine/raspberrypi-cpc-mc.conf
 ```
 
 5. And finally build the image:
