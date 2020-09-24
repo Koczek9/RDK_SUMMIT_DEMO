@@ -43,8 +43,9 @@ To launch our application in a container with Dobby, the application needs to be
 Let's generate an OCI bundle using the image we've just created and uploaded to Docker Hub using `BundleGen`:
 ```
 cd /home/vagrant/BundleGen/
-bundlegen generate --creds [username]:[password] --platform rpi3 --searchpath /vagrant/bundlegen_templates --appmetadata /vagrant/qt_app_instructions/qt-test-app.json docker://[username]/[repository]:qt-demo-app ./qt-demo-app
+bundlegen generate --creds [username]:[password] --platform rpi3 --appmetadata /vagrant/qt_app_instructions/qt-test-app.json docker://[username]/[repository]:qt-demo-app ./qt-demo-app
 ```
+
 
 # Launch the container on your Raspberry Pi
 
@@ -72,6 +73,11 @@ tar -xzvf qt-demo-app.tar.gz
 Change permission on the container rootfs:
 ```
 chown -R non-root:non-root qt-demo-app
+```
+
+The graphics device on the Raspberry Pi is owned by root. We're using user namespacing in the container so we'll need to relax the permissions for the graphics device a bit:
+```
+chmod 777 /dev/vchiq
 ```
 
 The `rpi3.json` platform template adds the `/tmp/westeros-dac` mount to add a Westeros socket to the container, but we don't need it, so let's just create a dummy file to mount:

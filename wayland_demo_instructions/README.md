@@ -109,19 +109,23 @@ tar -xzvf wayland_bundle.tar.gz
 ```
 chown -R non-root:non-root wayland_bundle
 ```
-14. Add environment variable required for wayland sinc:
+14. Change permissions to the graphics device:
+```
+chmod 777 /dev/vchiq
+```
+15. Add environment variable required for wayland sink:
 ```
 export XDG_RUNTIME_DIR=/tmp
 ```
-15. Run wayland sink:
+16. Run wayland sink:
 ```
 westeros --renderer /usr/lib/libwesteros_render_gl.so.0.0.0 --display westeros-dac &> /dev/null &
 ```
-16. Set permissions for westeros socket:
+17. Set permissions for westeros socket:
 ```
 chmod 777 /tmp/westeros-dac
 ```
-17. Run container:
+18. Run container:
 ```
 DobbyTool start demo ./wayland_bundle
 ```
