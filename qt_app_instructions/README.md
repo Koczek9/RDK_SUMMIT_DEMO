@@ -42,7 +42,7 @@ To launch our application in a container with Dobby, the application needs to be
 
 Let's generate an OCI bundle using the image we've just created and uploaded to Docker Hub using `BundleGen`:
 ```
-cd /home/vagrant/bundlegen/
+cd /home/vagrant/BundleGen/
 bundlegen generate --creds [username]:[password] --platform rpi3 --searchpath /vagrant/bundlegen_templates --appmetadata /vagrant/qt_app_instructions/qt-test-app.json docker://[username]/[repository]:qt-demo-app ./qt-demo-app
 ```
 

@@ -75,7 +75,7 @@ buildah push --creds [username]:[password] wayland_image [username]/[repository]
 ```
 5. Go to bundlegen directory:
 ```
-cd /home/vagrant/bundlegen
+cd /home/vagrant/BundleGen
 ```
 6. (Optional) if using virtual env - Activate venv:
 ```

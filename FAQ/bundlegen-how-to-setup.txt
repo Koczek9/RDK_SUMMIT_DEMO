@@ -3,7 +3,7 @@ Bundle Generator is a tool which generates extended OCI bundles from OCI Images.
 To Bundle Generator buildah just open Fedora VM provided in this package (Vagrantfile). If you are not sure how to work with Vagrant check "vagrant-how-to-setup" file.
 
 1. Clone bundle generator repository: git clone https://github.com/rdkcentral/BundleGen.git
-2. Go to bundlegen directory: cd bundlegen
+2. Go to bundlegen directory: cd BundleGen
 3. (Optional) Create virtual environment: python3 -m venv .venv
 4. (Optional) Enter virtual environment: source .venv/bin/activate
 5. Install bundlegen requirements: pip install -r requirements.txt
