@@ -1,0 +1,14 @@
+{
+    "id": "com.rdk.doom-test",
+    "type": "application/vnd.rdk-app.dac.native",
+    "graphics": true,
+    "network": {
+        "type": "open"
+    },
+    "storage": {},
+    "resources": {
+        "ram": "128M"
+    },
+    "features": [],
+    "mounts": []
+}
